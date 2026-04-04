@@ -1,0 +1,51 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        
+        List<List<Integer>> result = new ArrayList<>();
+
+        Arrays.sort(nums);
+
+        // initialize
+        int anchor = 0;
+        int lp;
+        int rp = nums.length;
+        int sum = 0;
+
+        while (anchor < rp) {
+            
+            if (anchor > 0 && nums[anchor] == nums[anchor - 1]) {
+                anchor++;
+                continue;
+            }
+            lp = anchor + 1;
+            rp = nums.length - 1;
+
+            // some loop
+            while (lp < rp) { // Check if lp < rp
+                sum = nums[anchor] + nums[lp] + nums[rp];
+
+                if (sum == 0) {
+                    result.add(Arrays.asList(nums[anchor], nums[lp++], nums[rp]));                
+                    
+                    // Prevent duplicates from occuring
+                    while(lp < rp && nums[lp] == nums[lp - 1]) {
+                        System.out.print("DUP");
+                        lp++;
+                    }
+                }
+
+                if (sum > 0) {
+                    rp--;
+                }
+
+                else if (sum < 0) {
+                    lp++;
+                }
+            }
+
+            anchor++;
+        }
+
+        return result;
+    }
+}
