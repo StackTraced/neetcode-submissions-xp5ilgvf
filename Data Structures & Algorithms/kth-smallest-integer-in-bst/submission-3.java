@@ -1,0 +1,45 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+class Solution {
+
+    private int globalVar = 0;
+    private TreeNode result;
+    private int target = 0;
+
+    public int kthSmallest(TreeNode root, int k) {
+        this.target = k;
+        dfs(root);
+
+        return result.val;
+    }
+
+    private void dfs (TreeNode root) {
+        if (root == null || result != null) return;
+
+        dfs(root.left);
+        
+        // Now we are at the node, we increment the value by 1
+        globalVar += 1; // This is currently the smallest node
+
+        if (globalVar == target) {
+            result = root;
+        }
+
+        dfs(root.right);
+    }
+
+}
