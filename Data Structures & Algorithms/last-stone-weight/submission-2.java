@@ -1,0 +1,30 @@
+class Solution {
+
+    // Time: Building the heap O(n log n)
+    // Inserts are O(log n)
+    // Total: O(n log n)
+
+    // Space: The space is the size of the array, which is at max, O(n)
+    public int lastStoneWeight(int[] stones) {
+        // I would usually do (a, b) -> a - b, but something something integer overflow
+        //PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> Integer.compare(b, a));
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> Integer.compare(b, a));
+        for (int s: stones) {
+            maxHeap.add(s);
+        }
+
+        // We are guaranteed a size of 1 stone minimum
+        while (maxHeap.size() > 1) {
+            // Given the size is greater than 1, we know we have 2
+            int x = maxHeap.poll();
+            int y = maxHeap.poll();
+
+            // If they are equal, we already destroyed them
+            // May need to adjsut the logic so we just run down
+            if (x == y) continue;
+            maxHeap.add(x - y); // X IS ALWAYS THE BIGGEST
+        }
+        
+        return maxHeap.size() > 0 ? maxHeap.poll() : 0;
+    }
+}
